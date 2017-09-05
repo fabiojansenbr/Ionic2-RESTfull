@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{tituloPagina}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-fab top right edge>
+        <button ion-fab mini (click)="AbreFormulario()"><ion-icon name="add"></ion-icon></button>
+
+    </ion-fab>
+    <div padding [hidden]="!abreForm">
+        <ion-item>
+            <ion-label color="primary" stacked>
+                Título
+            </ion-label>
+            <ion-input [(ngModel)]="nota.Title" type="text" placeholder="Título da nota">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>
+                Descrição
+            </ion-label>
+            <ion-input [(ngModel)]="nota.Body" type="text" placeholder="Descrição da nota">
+            </ion-input>
+        </ion-item>
+        <p>
+                <button [hidden]="editando" ion-button color="primary" (click)="adicionaNota()" block>Adicionar</button>
+                <button [hidden]="!editando" ion-button color="primary" (click)="editarNota()" block>Salvar</button>
+                <button ion-button color="light" (click)="AbreFormulario()" block>Cancelar</button>
+        </p>
+
+
+    </div>
+    <ion-list [hidden]="abreForm">
+        <ion-item-sliding #listaopcoes *ngFor="let item of listaNotas">
+            <button ion-item (click)="abreDetalhe(item)">
+                <h2>{{item.Title}}</h2>
+                <p>{{item.Body}}</p>
+            </button>
+
+            <ion-item-options side="right">
+                <button ion-button color="primary" (click)="abreEditarNota(item,listaopcoes)">
+                    <ion-icon name="create"></ion-icon>
+                    Editar
+                </button>
+                <button ion-button color="danger" (click)="deletarNota(item,listaopcoes)">
+                    <ion-icon name="trash"></ion-icon>
+                    Deletar
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>
